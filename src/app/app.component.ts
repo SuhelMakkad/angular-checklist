@@ -7,6 +7,4 @@ import { NavComponent } from './components/nav/nav.component';
   imports: [RouterOutlet, NavComponent],
   templateUrl: './app.component.html',
 })
-export class AppComponent {
-  title = 'checklist';
-}
+export class AppComponent {}

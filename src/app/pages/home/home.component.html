@@ -1,0 +1,19 @@
+@if (!checkListService.checklists().length) {
+<div class="text-xl text-center my-12 flex flex-col items-center gap-4">
+  <span> Start by adding a new check list </span>
+  <a
+    routerLink="/check-list"
+    class="text-sm bg-neutral-700 px-3 py-2 rounded-md cursor-pointer hover:bg-neutral-600 transition-colors"
+  >
+    Add check list
+  </a>
+</div>
+}
+
+<ul class="flex flex-col gap-2">
+  @for (checklist of checkListService.checklists(); track checklist.id) {
+  <li>
+    {{ checklist.name }}
+  </li>
+  }
+</ul>
