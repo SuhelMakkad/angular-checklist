@@ -1,6 +1,7 @@
 export type CheckList = {
   id: string;
   name: string;
+  createdAt: string;
 };
 
 export type Todo = {

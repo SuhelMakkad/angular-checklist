@@ -2,18 +2,39 @@
 <div class="text-xl text-center my-12 flex flex-col items-center gap-4">
   <span> Start by adding a new check list </span>
   <a
-    routerLink="/check-list"
+    routerLink="/checklist"
     class="text-sm bg-neutral-700 px-3 py-2 rounded-md cursor-pointer hover:bg-neutral-600 transition-colors"
   >
     Add check list
   </a>
 </div>
-}
+} @else {
+<header class="flex items-center justify-between my-4">
+  <h1 class="text-xl font-medium">Your Checklists</h1>
+  <a
+    routerLink="/checklist"
+    class="text-sm bg-neutral-700 px-3 py-2 rounded-md cursor-pointer hover:bg-neutral-600 transition-colors"
+  >
+    Add check list
+  </a>
+</header>
 
-<ul class="flex flex-col gap-2">
+<ul class="flex flex-col gap-3">
   @for (checklist of checkListService.checklists(); track checklist.id) {
-  <li>
-    {{ checklist.name }}
+  <li
+    class="bg-neutral-700 px-4 py-3 rounded-md capitalize flex items-center justify-between"
+  >
+    <span class="flex-1 truncate">
+      {{ checklist.name }}
+    </span>
+    <button
+      title="delete"
+      class="text-xl shrink-0 text-neutral-400 hover:text-neutral-200 cursor-pointer"
+      (click)="handleCheckListDelete(checklist.id)"
+    >
+      &times;
+    </button>
   </li>
   }
 </ul>
+}

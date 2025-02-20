@@ -13,33 +13,39 @@ export class ChecklistService {
   storageService = inject(StorageService);
 
   todos = signal<Todo[]>([]);
-  checklists = signal<CheckList[]>([
-    {
-      id: 'a',
-      name: 'test1',
-    },
-    {
-      id: 'b',
-      name: 'test2',
-    },
-    {
-      id: 'c',
-      name: 'test3',
-    },
-  ]);
+  checklists = signal<CheckList[]>([]);
 
   constructor() {
     effect(() => {
-      this.storageService.set(TODO_STORAGE_KEY, this.todos());
+      const items = this.todos();
+      if (items.length) {
+        this.storageService.set(TODO_STORAGE_KEY, items);
+      }
     });
 
     effect(() => {
-      this.storageService.set(CHECKLIST_STORAGE_KEY, this.checklists());
+      const items = this.checklists();
+      if (items.length) {
+        this.storageService.set(CHECKLIST_STORAGE_KEY, items);
+      }
     });
   }
 
+  loadInitData() {
+    const oldTodos = this.storageService.get<Todo[]>(TODO_STORAGE_KEY);
+    this.todos.set(oldTodos || []);
+
+    const oldCheckList = this.storageService.get<CheckList[]>(
+      CHECKLIST_STORAGE_KEY
+    );
+    this.checklists.set(oldCheckList || []);
+  }
+
   addChecklist(name: string) {
-    this.checklists.update((prev) => [...prev, { id: nanoid(), name }]);
+    this.checklists.update((prev) => [
+      ...prev,
+      { id: nanoid(), name, createdAt: new Date().toISOString() },
+    ]);
   }
 
   removeChecklist(id: string) {
