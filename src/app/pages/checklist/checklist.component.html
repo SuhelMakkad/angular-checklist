@@ -1,6 +1,6 @@
 @if (checklist()) {
-<header class="flex items-center gap-4 justify-between">
-  <h1 class="text-xl text-neutral-300 capitalize">
+<header class="flex items-center gap-4 justify-between my-4">
+  <h1 class="text-lg capitalize">
     {{ checklist()?.name || "" }}
   </h1>
 
@@ -15,10 +15,25 @@
 
 <div class="mt-4">
   @if (todos()?.length) {
-  <ul>
+  <ul class="flex flex-col gap-2">
     @for (todo of todos(); track todo.id) {
-    <li>
-      {{ todo.title }}
+    <li class="flex items-center gap-2 bg-neutral-700 px-4 py-2 rounded-md">
+      <input
+        [id]="todo.id"
+        type="checkbox"
+        [checked]="todo.completed"
+        (change)="toggleTodoState(todo.id, !todo.completed)"
+      />
+      <label [for]="todo.id" class="cursor-pointer select-none">
+        {{ todo.title }}
+      </label>
+      <button
+        title="delete"
+        class="text-neutral-400 hover:text-neutral-300 cursor-pointer ml-auto"
+        (click)="checklistService.removeTodo(todo.id)"
+      >
+        &times;
+      </button>
     </li>
     }
   </ul>

@@ -83,4 +83,16 @@ export class ChecklistService {
   getTodosByChecklistId(id: string) {
     return this.todos().filter((todo) => todo.checkListId === id);
   }
+
+  updateTodoState(todoId: string, newState: boolean) {
+    this.todos.update((prev) => {
+      const todo = prev.find((todo) => todo.id === todoId);
+      if (!todo) {
+        return prev;
+      }
+
+      todo.completed = newState;
+      return [...prev];
+    });
+  }
 }
