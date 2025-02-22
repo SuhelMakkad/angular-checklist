@@ -1,5 +1,5 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
-import { nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 import { CheckList, Todo } from './types';
 import { StorageService } from './storage.service';
 
@@ -41,10 +41,15 @@ export class ChecklistService {
     this.checklists.set(oldCheckList || []);
   }
 
+  getUuid() {
+    const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 10);
+    return nanoid();
+  }
+
   addChecklist(name: string) {
     this.checklists.update((prev) => [
       ...prev,
-      { id: nanoid(), name, createdAt: new Date().toISOString() },
+      { id: this.getUuid(), name, createdAt: new Date().toISOString() },
     ]);
   }
 
@@ -58,7 +63,7 @@ export class ChecklistService {
       {
         checkListId,
         title,
-        id: nanoid(),
+        id: this.getUuid(),
         completed: false,
         createdAt: new Date().toISOString(),
       },
