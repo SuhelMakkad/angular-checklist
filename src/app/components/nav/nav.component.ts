@@ -1,3 +1,4 @@
+import { routers } from '@/utils/route';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
@@ -6,4 +7,6 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   templateUrl: './nav.component.html',
 })
-export class NavComponent {}
+export class NavComponent {
+  routers = routers;
+}

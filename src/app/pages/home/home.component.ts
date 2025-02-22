@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ChecklistService } from '@/service/checklist.service';
 import { RouterLink } from '@angular/router';
+import { routers } from '@/utils/route';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +9,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
+  routers = routers;
   checkListService = inject(ChecklistService);
 
   ngOnInit() {
