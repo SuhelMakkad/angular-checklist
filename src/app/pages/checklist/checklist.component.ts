@@ -1,23 +1,27 @@
 import { ChecklistService } from '@/service/checklist.service';
+import { CheckList, Todo } from '@/service/types';
+import { routers } from '@/utils/route';
 import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-checklist',
-  imports: [FormsModule],
+  imports: [RouterLink],
   templateUrl: './checklist.component.html',
 })
 export class ChecklistComponent {
-  nameModel = signal('');
-  checkListService = inject(ChecklistService);
-  router = inject(Router);
+  route = inject(ActivatedRoute);
+  checklistService = inject(ChecklistService);
 
-  handleFormSubmit() {
-    const name = this.nameModel();
-    if (!name) return;
+  checklist = signal<CheckList | null>(null);
+  todos = signal<Todo[] | null>(null);
 
-    this.checkListService.addChecklist(name);
-    this.router.navigate(['/']);
+  routers = routers;
+
+  constructor() {
+    const checklistId = this.route.snapshot.params['checklistId'] as string;
+
+    this.checklist.set(this.checklistService.getChecklistById(checklistId));
+    this.todos.set(this.checklistService.getTodosByChecklistId(checklistId));
   }
 }

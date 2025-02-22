@@ -16,6 +16,8 @@ export class ChecklistService {
   checklists = signal<CheckList[]>([]);
 
   constructor() {
+    this.#loadInitData();
+
     effect(() => {
       const items = this.todos();
       if (items.length) {
@@ -31,7 +33,7 @@ export class ChecklistService {
     });
   }
 
-  loadInitData() {
+  #loadInitData() {
     const oldTodos = this.storageService.get<Todo[]>(TODO_STORAGE_KEY);
     this.todos.set(oldTodos || []);
 
@@ -72,5 +74,13 @@ export class ChecklistService {
 
   removeTodo(id: string) {
     this.todos.update((prev) => prev.filter((list) => list.id !== id));
+  }
+
+  getChecklistById(id: string) {
+    return this.checklists().filter((list) => list.id === id)[0];
+  }
+
+  getTodosByChecklistId(id: string) {
+    return this.todos().filter((todo) => todo.checkListId === id);
   }
 }

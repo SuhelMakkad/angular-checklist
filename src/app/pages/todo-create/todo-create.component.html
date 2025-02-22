@@ -1,0 +1,24 @@
+<div class="max-w-lg mx-auto">
+  <h1>Create Todo</h1>
+  <h2 class="text-neutral-400">Add new todo to {{ checklist()?.name }}</h2>
+
+  <form (submit)="handleSubmit()" class="flex flex-col gap-6 mt-4">
+    <div class="flex flex-col gap-1">
+      <input
+        autofocus
+        id="todo"
+        placeholder="Enter todo"
+        class="border border-neutral-400 outline-none py-2 px-4 rounded-md focus-within:ring"
+        name="todo-name"
+        [(ngModel)]="nameModel"
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="text-sm bg-neutral-700 px-3 py-2 rounded-md cursor-pointer hover:bg-neutral-600 transition-colors"
+    >
+      Add todo
+    </button>
+  </form>
+</div>

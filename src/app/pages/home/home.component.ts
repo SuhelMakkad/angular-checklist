@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ChecklistService } from '@/service/checklist.service';
 import { RouterLink } from '@angular/router';
 import { routers } from '@/utils/route';
@@ -8,13 +8,9 @@ import { routers } from '@/utils/route';
   imports: [RouterLink],
   templateUrl: './home.component.html',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   routers = routers;
   checkListService = inject(ChecklistService);
-
-  ngOnInit() {
-    this.checkListService.loadInitData();
-  }
 
   handleCheckListDelete(id: string) {
     this.checkListService.removeChecklist(id);
